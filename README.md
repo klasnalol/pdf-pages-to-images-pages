@@ -3,7 +3,7 @@ convert your pdf with pages into folder with photos
 A lightweight Python tool to split PDF pages into individual images (PNG or JPEG) using PyMuPDF. Works on Windows, macOS, and Linux with no external dependencies.
 
 #installation:
-download python than use pip to install pymupdf
+download python 3.7+ than use pip to install pymupdf
 pip install pymupdf
 
 Basic Command
@@ -11,24 +11,34 @@ python pdf_to_images.py input.pdf -o out
 
 Converts all pages of input.pdf into PNG images at 200 DPI and saves them in the out folder.
 
-Common Examples
-Action	Command
-Convert to PNG (default)	python pdf_to_images.py input.pdf -o out
-Convert to JPEG at 300 DPI	python pdf_to_images.py input.pdf -o out -f jpg --dpi 300
-Custom JPEG quality	python pdf_to_images.py input.pdf -o out -f jpg --quality 90
-Specific pages	python pdf_to_images.py input.pdf -o out -p 1-3,7,10-
-Constrain long edge to 2000px	python pdf_to_images.py input.pdf -o out --max-dim 2000
-Custom prefix/suffix	python pdf_to_images.py input.pdf -o out --prefix img_ --suffix _scan
+## Command-line Arguments
 
-#Command Line Options
-Option	       Description	                        Default
-pdf	           Input PDF file	                      Required
--o, --outdir	 Output directory for images	        Required
--p, --pages	   Page range (e.g. 1-3,7,10-)	        All pages
---dpi	         Image DPI (resolution)	              200
--f, --format	 Output format (png, jpg, jpeg)	      png
---quality	     JPEG quality (1–100)	                92
---zero-pad	   Zero-padding for page numbers	      3
---prefix	     Filename prefix	                    page_
---suffix	     Filename suffix	                    (none)
---max-dim	     Max long edge in pixels	            (no limit)
+| Argument | Short | Type | Default | Description |
+|-----------|--------|-------|-----------|-------------|
+| `pdf` | — | Path | — | Path to input PDF file |
+| `--outdir` | `-o` | Path | — | Output directory for images |
+| `--pages` | `-p` | String | All pages | Page selection, e.g. `1-3,7,10-` |
+| `--dpi` | — | Integer | 200 | Output resolution (dots per inch) |
+| `--format` | `-f` | String | `png` | Output format: `png`, `jpg`, or `jpeg` |
+| `--quality` | — | Integer | 92 | JPEG quality (1–100) |
+| `--zero-pad` | — | Integer | 3 | Zero padding for page numbers |
+| `--prefix` | — | String | `page_` | Filename prefix |
+| `--suffix` | — | String | *(none)* | Filename suffix |
+| `--max-dim` | — | Integer | *(none)* | Maximum long-edge dimension in pixels |
+
+---
+
+## Example
+
+Convert all pages of `document.pdf` into 300-DPI JPEGs with high quality, custom filenames, and constrained long edge:
+
+```bash
+python pdf_to_images.py document.pdf \
+    -o output \
+    -f jpg \
+    --dpi 300 \
+    --quality 95 \
+    --prefix img_ \
+    --suffix _scan \
+    --zero-pad 4 \
+    --max-dim 2000
